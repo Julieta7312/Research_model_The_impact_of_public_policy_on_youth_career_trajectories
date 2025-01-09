@@ -123,7 +123,7 @@ aggregated_df.reset_index(drop = False, inplace = True)
 print(aggregated_df)
 
 # Save the aggregated data frame to a CSV file
-# aggregated_df.to_csv("./data/applications_to_qs_aggregated_faculties.csv", index = False)
+# aggregated_df.to_csv("./data/qs_aggregated_ysu_applications.csv", index = False)
 
 aggregated_df = prep_var("./data/qs_aggregated_ysu_applications.csv")
 
