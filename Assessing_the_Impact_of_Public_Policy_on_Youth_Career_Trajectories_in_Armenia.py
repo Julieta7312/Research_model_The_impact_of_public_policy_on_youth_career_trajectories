@@ -1,4 +1,4 @@
-""" The Impact of National Defense Policy on Career Choices of Armenian Youth """
+""" The Impact of Public Policy on Youth Career Trajetories in Armenian """
 
 # Hypothesis: The number of applicants in STEM faculties in Armenia will increase 
 # after the Government's new policy adopted in 2023.
@@ -123,7 +123,7 @@ aggregated_df.reset_index(drop = False, inplace = True)
 print(aggregated_df)
 
 # Save the aggregated data frame to a CSV file
-# aggregated_df.to_csv("./data/aggregated_qs_faculty_applications_government_promoted_faculties.csv", index = False)
+# aggregated_df.to_csv("./data/applications_to_qs_aggregated_faculties.csv", index = False)
 
 aggregated_df = prep_var("./data/aggregated_qs_faculty_applications_government_promoted_faculties.csv")
 
