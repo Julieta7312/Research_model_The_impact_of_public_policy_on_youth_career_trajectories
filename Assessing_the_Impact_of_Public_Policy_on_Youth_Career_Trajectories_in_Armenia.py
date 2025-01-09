@@ -1,4 +1,4 @@
-""" The Impact of Public Policy on Youth Career Trajetories in Armenian """
+""" The Impact of Public Policy on Youth Career Trajetories in Armenia """
 
 # Hypothesis: The number of applicants in STEM faculties in Armenia will increase 
 # after the Government's new policy adopted in 2023.
