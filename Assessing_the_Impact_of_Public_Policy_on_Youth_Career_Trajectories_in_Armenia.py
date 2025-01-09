@@ -20,7 +20,7 @@ from sys import displayhook
 import plotly.express as px
 
 # File paths containing the raw data
-ysu_data_file = "./data/ysu_annual_faculty_applications_processed_data - English.csv"
+ysu_data_file = "./data/ysu_annual_applications_processed_data - English.csv"
 
 def prep_var(file_path):
     var = pd.read_csv(file_path, na_values=np.nan) # 47 cross-sections
