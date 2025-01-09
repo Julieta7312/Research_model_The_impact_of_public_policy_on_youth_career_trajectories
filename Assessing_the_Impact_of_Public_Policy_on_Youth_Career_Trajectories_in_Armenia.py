@@ -125,7 +125,7 @@ print(aggregated_df)
 # Save the aggregated data frame to a CSV file
 # aggregated_df.to_csv("./data/applications_to_qs_aggregated_faculties.csv", index = False)
 
-aggregated_df = prep_var("./data/aggregated_qs_faculty_applications_government_promoted_faculties.csv")
+aggregated_df = prep_var("./data/qs_aggregated_ysu_applications.csv")
 
 aggregated_df = aggregated_df.rename(columns={"index":"year", "value":"fac_app"})
 
