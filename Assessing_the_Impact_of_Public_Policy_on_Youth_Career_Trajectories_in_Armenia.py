@@ -29,7 +29,7 @@ def prep_var(file_path):
     var = var.reset_index().melt(id_vars=["index"])
     return(var)
 
-"""___ Difference-in-Differences Estimation with Multiple Groups and Time Periods for 2023"s Government"s policy ___"""
+"""___ Difference-in-Differences Estimation for 2023"s Government"s policy ___"""
 
 ysu_data = pd.read_csv(ysu_data_file)
 entire_fac_list = ysu_data["faculty"].to_list()
