@@ -113,50 +113,50 @@ for group_name, faculties in qs_subject_classification.items():
     aggregated_data.append(group_data)
 
 # Concatenate all aggregated data into a single DataFrame
-aggregated_df = pd.concat(aggregated_data, axis=1).T
+agg_df = pd.concat(aggregated_data, axis=1).T
 
 # Set "Group" as the index
-aggregated_df.set_index("Group", inplace=True)
-aggregated_df.reset_index(drop = False, inplace = True)
+agg_df.set_index("Group", inplace=True)
+agg_df.reset_index(drop = False, inplace = True)
 
 # Display the aggregated data
-print(aggregated_df)
+print(agg_df)
 
 # Save the aggregated data frame to a CSV file
-# aggregated_df.to_csv("./data/qs_aggregated_ysu_applications.csv", index = False)
+# agg_df.to_csv("./data/qs_aggregated_ysu_applications.csv", index = False)
 
-aggregated_df = prep_var("./data/qs_aggregated_ysu_applications.csv")
+agg_df = prep_var("./data/qs_aggregated_ysu_applications.csv")
 
-aggregated_df = aggregated_df.rename(columns={"index":"year", "value":"fac_app"})
+agg_df = agg_df.rename(columns={"index":"year", "value":"fac_app"})
 
-aggregated_df = aggregated_df.dropna(subset=["fac_app"])
-aggregated_df = aggregated_df.assign(fac_app=aggregated_df["fac_app"].astype(int))
+agg_df = agg_df.dropna(subset=["fac_app"])
+agg_df = agg_df.assign(fac_app=agg_df["fac_app"].astype(int))
 
-aggregated_df = aggregated_df.assign(fac_app_div_mean=aggregated_df.groupby("Group")["fac_app"].transform(lambda x: x / x.mean()))
-px.line(aggregated_df, y="fac_app_div_mean", x="year", line_group="Group", color="Group")
+agg_df = agg_df.assign(fac_app_div_mean=agg_df.groupby("Group")["fac_app"].transform(lambda x: x / x.mean()))
+px.line(agg_df, y="fac_app_div_mean", x="year", line_group="Group", color="Group")
 
-# aggregated_df.rename(columns={'fac_app_div_mean':'Scaled applications', 'year':'Date', 'Group':'faculty group'}, inplace=True)
+# agg_df_df.rename(columns={'fac_app_div_mean':'Scaled applications', 'year':'Date', 'Group':'faculty group'}, inplace=True)
 # sns.set(style='whitegrid', rc={"grid.linewidth": 0.1}, font_scale=1.1)
-# sns.lineplot(data=aggregated_df, x='Date', y='Scaled applications', hue='faculty group')
+# sns.lineplot(data=agg_df, x='Date', y='Scaled applications', hue='faculty group')
 # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 # plt.show()
 
 post_2023_law = ["2023", "2024"] # at least two data points for years are requiired.
-aggregated_df["post_2023_law"] = np.where(aggregated_df["year"].isin(post_2023_law), 1, 0)
-cond = aggregated_df["Group"].isin(["Government Promoted Faculties"])
-aggregated_df["stem"] = np.where(cond, 1, 0)
-aggregated_df["post_2023_law_stem"] = aggregated_df["post_2023_law"] * aggregated_df["stem"]
+agg_df["post_2023_law"] = np.where(agg_df["year"].isin(post_2023_law), 1, 0)
+cond = agg_df["Group"].isin(["Government Promoted Faculties"])
+agg_df["stem"] = np.where(cond, 1, 0)
+agg_df["post_2023_law_stem"] = agg_df["post_2023_law"] * agg_df["stem"]
 
-aggregated_df["year"] = pd.factorize(aggregated_df["year"], sort = True) [0] + 1
-aggregated_df["year"].unique()
+agg_df["year"] = pd.factorize(agg_df["year"], sort = True) [0] + 1
+agg_df["year"].unique()
 
-aggregated_df["Group"] = pd.factorize(aggregated_df["Group"], sort = True) [0] + 1
+agg_df["Group"] = pd.factorize(agg_df["Group"], sort = True) [0] + 1
 
-endg = pd.DataFrame(aggregated_df["fac_app_div_mean"])
-exog = aggregated_df[["post_2023_law_stem"]]
-aggregated_df.info()
-aggregated_df.describe()
+endg = pd.DataFrame(agg_df["fac_app_div_mean"])
+exog = agg_df[["post_2023_law_stem"]]
+agg_df.info()
+agg_df.describe()
 
 clustered_2ways_ols_2022 = sm.OLS(endg, sm.add_constant(exog))
-fitted_mdl_2022 = clustered_2ways_ols_2022.fit(cov_type = "cluster", cov_kwds={"groups" : np.array(aggregated_df[["Group", "year"]])})
+fitted_mdl_2022 = clustered_2ways_ols_2022.fit(cov_type = "cluster", cov_kwds={"groups" : np.array(agg_df[["Group", "year"]])})
 fitted_mdl_2022.summary()
